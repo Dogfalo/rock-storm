@@ -1,6 +1,6 @@
 console.log('You are playing Rock Storm the rockiest game on Earth');
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(960, 640, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 var player;
 var ground;
 var platforms;
@@ -17,14 +17,26 @@ function create() {
    player = game.add.sprite(0, 0, 'smiley');
    platforms = game.add.group();
    platforms.enableBody = true;
-   ground = platforms.create(0, game.world.height - 64, 'ground');
+
+   
+   ground = platforms.create(0, game.world.height - 45, 'ground');
 
 
-   game.physics.arcade.enable(player);
    ground.body.immovable = true;
-   ground.scale.setTo(.2, .2);
+   // ground.scale.setTo(.2, .2);
+   var num_ground_tiles = game.world.width / ground.width;
+   console.log(num_ground_tiles);
+
+   // Add ground tiles
+   for (var i = 0; i < num_ground_tiles; i++) {
+      var new_ground = platforms.create(i * ground.body.width, game.world.height - 45, 'ground');
+      new_ground.body.immovable = true;
+      // new_ground.scale.setTo(.2,.2);
+   }
 
    //  Player physics properties. Give the little guy a slight bounce.
+
+   game.physics.arcade.enable(player);
    player.body.bounce.y = 0.2;
    player.body.gravity.y = 300;
    player.body.collideWorldBounds = true;
