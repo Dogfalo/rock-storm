@@ -1,0 +1,6 @@
+{
+  "name": "Rock_Storm",
+	"dependencies": {
+	  "phaser": "2.2.1"
+	}
+}
