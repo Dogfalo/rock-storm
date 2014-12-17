@@ -1,6 +1,6 @@
 console.log('You are playing Rock Storm the rockiest game on Earth');
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(1200, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 var player;
 var ground;
 var platforms;
@@ -15,6 +15,7 @@ function create() {
    game.physics.startSystem(Phaser.Physics.ARCADE);
 
    player = game.add.sprite(0, 0, 'smiley');
+   resize(player,10,10);
    platforms = game.add.group();
    platforms.enableBody = true;
    ground = platforms.create(0, game.world.height - 64, 'ground');
@@ -53,4 +54,12 @@ function update() {
       player.body.velocity.x = 0;
 
    }
+}
+
+//height and width in hundredths fractions of screen height
+function resize(object,height,width){
+   sHeight = game.stage.height/100*height
+   player.height = sHeight
+   sWidth = game.stage.height/100*width
+   player.width = sWidth
 }
