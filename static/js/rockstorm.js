@@ -47,7 +47,6 @@ function create() {
    // Add Enemies
    blocks = game.add.group();
    blocks.enableBody = true;
-   blocks.setAll('outOfBoundsKill', true);
    sendBlock();
 }
 
@@ -58,18 +57,18 @@ function create() {
 function update() {
    // Set collision with platform
    game.physics.arcade.collide(player, platforms);
-
+   game.physics.arcade.collide(player, blocks);
    cursors = game.input.keyboard.createCursorKeys();
    if (cursors.left.isDown)
    {
       //  Move to the left
-      player.body.velocity.x = -150;
+      player.body.velocity.x = -300;
 
    }
    else if (cursors.right.isDown)
    {
       //  Move to the right
-      player.body.velocity.x = 150;
+      player.body.velocity.x = 300;
 
    }
 
@@ -94,9 +93,12 @@ function sendBlock() {
 
    MIN_BLOCK_SPEED = 200;
    MAX_BLOCK_SPEED = 900
-   var new_block = blocks.create(game.rnd.integerInRange(0, game.stage.width), 0 - 100, 'block');
+   var new_block = blocks.create(game.rnd.integerInRange(0, game.world.width), 0 - 100, 'block');
    new_block.body.gravity.y = game.rnd.integerInRange(MIN_BLOCK_SPEED, MAX_BLOCK_SPEED);
-
-   console.log('new block added');
+   new_block.update = function (){
+      if (new_block.y > game.world.height + 200) {
+         new_block.kill();
+      }
+   }
    game.time.events.add(game.rnd.integerInRange(MIN_BLOCK_SPACING, MAX_BLOCK_SPACING), sendBlock);
 }
