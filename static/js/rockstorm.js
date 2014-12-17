@@ -47,6 +47,7 @@ function create() {
    // Add Enemies
    blocks = game.add.group();
    blocks.enableBody = true;
+   blocks.setAll('outOfBoundsKill', true);
    sendBlock();
 }
 
@@ -93,7 +94,7 @@ function sendBlock() {
 
    MIN_BLOCK_SPEED = 200;
    MAX_BLOCK_SPEED = 900
-   var new_block = blocks.create(0, 0 - 100, 'block');
+   var new_block = blocks.create(game.rnd.integerInRange(0, game.stage.width), 0 - 100, 'block');
    new_block.body.gravity.y = game.rnd.integerInRange(MIN_BLOCK_SPEED, MAX_BLOCK_SPEED);
 
    console.log('new block added');
