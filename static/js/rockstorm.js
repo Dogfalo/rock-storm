@@ -1,0 +1,1 @@
+console.log('You are playing Rock Storm the rockiest game on Earth');
