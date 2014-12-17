@@ -8,11 +8,12 @@ var platforms;
 function preload() {
    game.load.image('smiley', 'assets/images/smiley.png');
    game.load.image('ground', 'assets/images/ground.png');
+   game.load.image('block', '/assets/images/powerup.png');
 }
 
 function create() {
    //  We're going to be using physics, so enable the Arcade Physics system
-   game.physics.startSystem(Phaser.Physics.ARCADE);
+   game.physics.startSystem(Phaser.Physics.P2);
    
    player = game.add.sprite(0, 0, 'smiley');
    resize(player,10,10);
@@ -41,7 +42,17 @@ function create() {
    player.body.bounce.y = 0;
    player.body.gravity.y = 500;
    player.body.collideWorldBounds = true;
+
+
+   // Add Enemies
+   blocks = game.add.group();
+   blocks.enableBody = true;
+   sendBlock();
 }
+
+
+
+
 
 function update() {
    // Set collision with platform
@@ -74,4 +85,17 @@ function resize(object,height,width){
    object.height = sHeight
    sWidth = game.stage.height/100*width
    object.width = sWidth
+}
+
+function sendBlock() {
+   MIN_BLOCK_SPACING = 500;
+   MAX_BLOCK_SPACING = 1000;
+
+   MIN_BLOCK_SPEED = 200;
+   MAX_BLOCK_SPEED = 900
+   var new_block = blocks.create(0, 0 - 100, 'block');
+   new_block.body.gravity.y = game.rnd.integerInRange(MIN_BLOCK_SPEED, MAX_BLOCK_SPEED);
+
+   console.log('new block added');
+   game.time.events.add(game.rnd.integerInRange(MIN_BLOCK_SPACING, MAX_BLOCK_SPACING), sendBlock);
 }
