@@ -13,8 +13,9 @@ function preload() {
 function create() {
    //  We're going to be using physics, so enable the Arcade Physics system
    game.physics.startSystem(Phaser.Physics.ARCADE);
-
+   
    player = game.add.sprite(0, 0, 'smiley');
+   resize(player,10,10);
    platforms = game.add.group();
    platforms.enableBody = true;
 
@@ -23,7 +24,7 @@ function create() {
 
 
    ground.body.immovable = true;
-   // ground.scale.setTo(.2, .2);
+   resize(ground,8,8);
    var num_ground_tiles = game.world.width / ground.width;
    console.log(num_ground_tiles);
 
@@ -37,8 +38,8 @@ function create() {
    //  Player physics properties. Give the little guy a slight bounce.
 
    game.physics.arcade.enable(player);
-   player.body.bounce.y = 0.2;
-   player.body.gravity.y = 300;
+   player.body.bounce.y = 0;
+   player.body.gravity.y = 500;
    player.body.collideWorldBounds = true;
 }
 
@@ -65,4 +66,12 @@ function update() {
       player.body.velocity.x = 0;
 
    }
+}
+
+//height and width in hundredths fractions of screen height
+function resize(object,height,width){
+   sHeight = game.stage.height/100*height
+   object.height = sHeight
+   sWidth = game.stage.height/100*width
+   object.width = sWidth
 }
